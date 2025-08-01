@@ -1,0 +1,97 @@
+<div class="tournament-container">
+  <div class="nav-bar">
+    <div class="left-nav">
+      <div class="trophy-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+      <div class="nav-heading">
+        <h3><strong>SquashIt</strong></h3>
+        <p>Tournament manager</p>
+      </div>
+    </div>
+
+    <div class="middle-nav">
+      <%= link_to "Features", "#", class: "nav-link" %>
+      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", "#", class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+    </div>
+
+    <div class="right-nav">
+      <% if user_signed_in? %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+      <% end %>
+      <a href="#" id="create-nav-button"><strong>Create tournament</strong></a>
+    </div>
+
+  </div>
+  <div class="centered-new-tournament">
+
+    <div class="back-link-container">
+      <i class="bi bi-arrow-left back-link">  </i><%= link_to "Back to Home", root_path, class: "back-link" %>
+    </div>
+
+    <div class="new-tournament-heading">
+      <i class="bi bi-trophy new-tournament-icon"></i>
+      <h2>Create New Tournament</h2>
+      <p>Set up your squash tournament in minutes</p>
+    </div>
+
+    <div class="new-tournament-form-container">
+      <h4>Tournament Details</h4>
+      <p>Fill in the information below to create your tournament</p>
+      <div class="new-tournament-form">
+        <%= form_with(model: @tournament, local: true) do |form| %>
+          <div class="form-group">
+            <%= form.label :name, "Tournament Name" %>
+            <%= form.text_field :name, class: "form-control", placeholder: "Enter tournament name" %>
+          </div>
+
+          <div class="form-columns">
+            <div class="form-group">
+              <%= form.label :bracket_type, "Tournament Type" %>
+                <%= form.select :bracket_type, ["Single elimination", "Double elimination", "Round Robin"], {prompt: "Select format"}, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :max_players, "Max Players" %>
+              <% if @tournament.bracket_type == "Round Robin" %>
+                <%= form.select :max_players, [2, 4, 6, 8], placeholder: "Select max players", class: "form-control" %>
+              <% elsif @tournament.bracket_type == "Single elimination" %>
+                <%= form.select :max_players, (2..32).step(2).to_a, { prompt: "Select max players" }, class: "form-control" %>
+              <% elsif @tournament.bracket_type == "Double elimination" %>
+                <%= form.select :max_players, (2..32).step(2).to_a, { prompt: "Select max players" }, class: "form-control" %>
+              <% else %>
+                <%= form.select :max_players, ["Select a format first"], { prompt: "Select a tournament type" }, class: "form-control" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-columns">
+            <div class="form-group">
+              <%= form.label :start_date, "Start Date" %>
+              <%= form.date_select :start_date, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+              <%= form.label :end_date, "End Date" %>
+              <%= form.date_select :end_date, class: "form-control" %>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <%= form.submit "Create Tournament", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+
+
+
+  </div>
+</div>

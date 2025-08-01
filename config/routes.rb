@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
 
+  resources :tournaments, only: [:show, :new, :create]
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

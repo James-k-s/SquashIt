@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_01_192137) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_01_205328) do
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.string "location"
@@ -20,6 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_01_192137) do
     t.integer "created_by_user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "max_players"
     t.index ["created_by_user_id"], name: "index_tournaments_on_created_by_user_id"
   end
 
