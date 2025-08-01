@@ -1,0 +1,165 @@
+<div class="home-container">
+
+  <div class="nav-bar">
+    <div class="left-nav">
+      <div class="trophy-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+      <div class="nav-heading">
+        <h3><strong>SquashIt</strong></h3>
+        <p>Tournament manager</p>
+      </div>
+    </div>
+
+    <div class="middle-nav">
+      <%= link_to "Features", "#", class: "nav-link" %>
+      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", "#", class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+    </div>
+
+    <div class="right-nav">
+      <% if user_signed_in? %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+      <% end %>
+      <a href="#" id="create-nav-button"><strong>Create tournament</strong></a>
+    </div>
+
+  </div>
+
+  <div class="home-banner">
+    <div class="left-banner">
+
+      <div class="small-text">
+        <i class="bi bi-braces"></i>
+        <p>Perfect for local tournaments</p>
+      </div>
+
+      <div class="big-text">
+        <h1 id="organize-your"><strong>Organize Your</strong></h1>
+        <h1 id="squash-tournaments"><strong>Squash Tournaments</strong></h1>
+        <h1 id="effortlessly"><strong>Effortlessly</strong></h1>
+        <p>From casual games with friends to competitive club tournaments, our platform automatically creates brackets, manages scoring, and tracks winners. Just add players and let the games begin!</p>
+      </div>
+      <div class="banner-buttons">
+        <a href="#" id="create-banner-button"><i class="bi bi-trophy"></i>  Create tournament</a>
+        <a href="#" id="how-banner-button"><i class="bi bi-person"></i>  How it works</a>
+      </div>
+    </div>
+    <div class="right-banner">
+      <div class="banner-leaderboard">
+        <h6><strong><i class="bi bi-trophy"></i>  Friday Night Tournament</strong></h6>
+        <div class="leaderboard-content">
+          <div class="leaderboard-left">
+            <div class="player-1">
+              <h5><strong>Semi-Final</strong></h5>
+              <p>Mike vs John</p>
+              <h6><strong>11-9, 11-4</strong></h6>
+            </div>
+            <div class="player-2">
+              <h5><strong>Semi-Final</strong></h5>
+              <p>Jane vs Flint</p>
+              <h6><strong>9-11, 4-11</strong></h6>
+            </div>
+          </div>
+
+          <div class="leaderboard-right">
+            <div class="banner-final">
+              <i class="bi bi-trophy"></i>
+              <h5><strong>Final</strong></h5>
+              <p>Mike vs Flint</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="home-features-heading">
+    <h2 id="everything-you-need-for">Everything You Need For</h2>
+    <h2 id="perfect-tournaments">Perfect Tournaments</h2>
+    <p>Our platform handles all the complex tournament logistics so you can focus on playing great squash.</p>
+  </div>
+
+  <div class="feature-cards">
+    <div class="feature-card">
+      <i class="bi bi-braces green"></i>
+      <h5>Automated Brackets</h5>
+      <p>Generate tournament brackets instantly. Just add players and let us handle the rest.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="bi bi-people yellow"></i>
+      <h5>Player Management</h5>
+      <p>Invite players, track scores, and manage match schedules with ease.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="bi bi-graph-up green"></i>
+      <h5>Performance Tracking</h5>
+      <p>Analyze player performance with detailed statistics and match history.</p>
+    </div>
+    <div class="feature-card">
+      <i class="bi bi-stopwatch yellow"></i>
+      <h5>Live Score Tracking</h5>
+      <p>Keep track of scores in real-time with our live scoring feature.</p>
+    </div>
+    <div class="feature-card">
+      <i class="bi bi-chat-left-text green"></i>
+      <h5>Community Engagement</h5>
+      <p>Connect with other squash enthusiasts through our community forums.</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="bi bi-layout-text-sidebar-reverse yellow"></i>
+      <h5>Tournament Formats</h5>
+      <p>Choose from a variety of tournament formats to suit your needs, including single elimination, double elimination, and round robin.</p>
+    </div>
+  </div>
+
+  <div class="get-started-button">
+    <a href="#">Get Started  <i class="bi bi-arrow-right"></i></a>
+  </div>
+
+  <div class="home-footer">
+    <div class="footer-one">
+      <div class="footer-logo">
+        <strong><i class="bi bi-trophy trophy-footer-logo"></i></strong>
+        <div class="logo-text">
+          <p><strong>SquashIt</strong></p>
+          <p>Tournament manager</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-two">
+      <h6>Product</h6>
+      <p>Features</p>
+      <p>How it works</p>
+      <p>Tournaments</p>
+      <p>Pricing</p>
+    </div>
+
+    <div class="footer-three">
+      <h6>Resources</h6>
+      <p>Help center</p>
+      <p>Community</p>
+      <p>Blog</p>
+
+    </div>
+
+    <div class="footer-four">
+      <h6>Connect</h6>
+      <div class="footer-socials">
+        <i class="bi bi-envelope"></i>
+        <i class="bi bi-twitter-x"></i>
+        <i class="bi bi-instagram"></i>
+      </div>
+      <p>support@squashit.com</p>
+    </div>
+  </div>
+</div>
