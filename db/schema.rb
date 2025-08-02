@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_01_205328) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_02_133637) do
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.string "location"
@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_01_205328) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "max_players"
+    t.integer "min_players"
     t.index ["created_by_user_id"], name: "index_tournaments_on_created_by_user_id"
   end
 
@@ -36,5 +37,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_01_205328) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "tournaments", "created_by_users"
+  add_foreign_key "tournaments", "users", column: "created_by_user_id"
 end

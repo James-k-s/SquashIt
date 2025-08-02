@@ -1,0 +1,32 @@
+  <div class="nav-bar">
+    <div class="left-nav">
+      <div class="trophy-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+      <div class="nav-heading">
+        <h3><strong>SquashIt</strong></h3>
+        <p>Tournament manager</p>
+      </div>
+    </div>
+
+    <div class="middle-nav">
+      <%= link_to "Features", "#", class: "nav-link" %>
+      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", "#", class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+    </div>
+
+    <div class="right-nav">
+      <% if user_signed_in? %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+      <% end %>
+      <a href="#" id="create-nav-button"><strong>Create tournament</strong></a>
+    </div>
+
+  </div>
+<div class="show-tournament-container">
+  <h1><%= @tournament.name %></h1>
+</div>

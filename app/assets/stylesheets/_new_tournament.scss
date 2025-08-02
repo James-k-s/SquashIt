@@ -60,6 +60,8 @@
   padding: 16px;
   input, select {
     margin-bottom: 32px;
+    border-radius: 6px;
+    border: solid 1px #618C72;
   }
 }
 
@@ -67,4 +69,45 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+}
+
+#create-tournament-button-form {
+  background-color: #33704C;
+  color: white;
+  border-radius: 6px;
+  padding: 8px;
+  width: 100%;
+}
+
+#cancel-button-form {
+  display: flex;
+  background-color: white;
+  border: solid 1px #33704C;
+  color: #33704C;
+  border-radius: 6px;
+  text-decoration: none;
+  padding: 8px;
+  width: 343.2px;
+  justify-content: center;
+}
+
+.helpful-tip-new-form {
+  padding: 16px;
+  background-color: #FCF0D1;
+  border: solid 1px #F4BC0A;
+  margin-top: 16px;
+  border-radius: 8px;
+}
+
+.pro-tip-inline {
+  display: flex;
+  flex-direction: row;
+  color: #33704C;
+  i {
+    margin-right: 8px;
+  }
+}
+
+#helpful-tip-heading {
+  margin-bottom: 16px;
 }

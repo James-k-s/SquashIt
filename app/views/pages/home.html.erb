@@ -45,8 +45,8 @@
         <p>From casual games with friends to competitive club tournaments, our platform automatically creates brackets, manages scoring, and tracks winners. Just add players and let the games begin!</p>
       </div>
       <div class="banner-buttons">
-        <a href="#" id="create-banner-button"><i class="bi bi-trophy"></i>  Create tournament</a>
-        <a href="#" id="how-banner-button"><i class="bi bi-person"></i>  How it works</a>
+        <%= link_to "<i class='bi bi-trophy'></i>  Create tournament".html_safe, new_tournament_path, id: "create-banner-button" %>
+        <%= link_to "<i class='bi bi-person'></i>  How it works".html_safe, "#", id: "how-banner-button" %>
       </div>
     </div>
     <div class="right-banner">

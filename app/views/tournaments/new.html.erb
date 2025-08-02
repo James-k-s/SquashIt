@@ -49,25 +49,27 @@
             <%= form.label :name, "Tournament Name" %>
             <%= form.text_field :name, class: "form-control", placeholder: "Enter tournament name" %>
           </div>
+          <div class="form-group">
+            <%= form.label :bracket_type, "Tournament Type" %>
+              <%= form.select :bracket_type, ["Single elimination", "Double elimination", "Round Robin"], {prompt: "Select format"}, class: "form-control" %>
+          </div>
 
           <div class="form-columns">
+
             <div class="form-group">
-              <%= form.label :bracket_type, "Tournament Type" %>
-                <%= form.select :bracket_type, ["Single elimination", "Double elimination", "Round Robin"], {prompt: "Select format"}, class: "form-control" %>
+              <%= form.label :min_players, "Min Players" %>
+              <%= form.select :min_players, [ 4, 6, 8], { prompt: "Select min players" }, class: "form-control" %>
             </div>
 
             <div class="form-group">
               <%= form.label :max_players, "Max Players" %>
-              <% if @tournament.bracket_type == "Round Robin" %>
-                <%= form.select :max_players, [2, 4, 6, 8], placeholder: "Select max players", class: "form-control" %>
-              <% elsif @tournament.bracket_type == "Single elimination" %>
-                <%= form.select :max_players, (2..32).step(2).to_a, { prompt: "Select max players" }, class: "form-control" %>
-              <% elsif @tournament.bracket_type == "Double elimination" %>
-                <%= form.select :max_players, (2..32).step(2).to_a, { prompt: "Select max players" }, class: "form-control" %>
-              <% else %>
-                <%= form.select :max_players, ["Select a format first"], { prompt: "Select a tournament type" }, class: "form-control" %>
-              <% end %>
+              <%= form.select :max_players, [2, 4, 6, 8], { prompt: "Select max players" }, class: "form-control" %>
             </div>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :location, "Location" %>
+            <%= form.text_field :location, class: "form-control", placeholder: "Enter tournament location" %>
           </div>
 
           <div class="form-columns">
@@ -83,15 +85,80 @@
           </div>
 
 
-          <div class="form-group">
-            <%= form.submit "Create Tournament", class: "btn btn-primary" %>
+          <div class="form-columns">
+            <div class="form-group">
+              <%= form.submit "Create Tournament", id: "create-tournament-button-form" %>
+            </div>
+
+            <div class="form-group">
+              <%= link_to "Cancel", root_path, id: "cancel-button-form"%>
+            </div>
           </div>
         <% end %>
       </div>
 
     </div>
 
+    <div class="helpful-tip-new-form" >
+      <div class="pro-tip-inline", id="helpful-tip-heading">
+        <h5><i class="bi bi-gear"></i></h5>
+        <h5>Pro Tip</h5>
+      </div>
+
+      <div class="pro-tip-inline">
+        <i class="bi bi-people yellow" ></i>
+        <p>Single elimination works best for 4-16 players</p>
+      </div>
+
+       <div class="pro-tip-inline">
+        <i class="bi bi-trophy yellow"></i>
+        <p>Round robin ensures everyone plays multiple matches</p>
+      </div>
+
+      <div class="pro-tip-inline">
+        <i class="bi bi-calendar-event yellow"></i>
+        <p>Allow 30-45 minutes per match for scheduling</p>
+      </div>
+
+    </div>
 
 
+  </div>
+  <div class="home-footer">
+    <div class="footer-one">
+      <div class="footer-logo">
+        <strong><i class="bi bi-trophy trophy-footer-logo"></i></strong>
+        <div class="logo-text">
+          <p><strong>SquashIt</strong></p>
+          <p>Tournament manager</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-two">
+      <h6>Product</h6>
+      <p>Features</p>
+      <p>How it works</p>
+      <p>Tournaments</p>
+      <p>Pricing</p>
+    </div>
+
+    <div class="footer-three">
+      <h6>Resources</h6>
+      <p>Help center</p>
+      <p>Community</p>
+      <p>Blog</p>
+
+    </div>
+
+    <div class="footer-four">
+      <h6>Connect</h6>
+      <div class="footer-socials">
+        <i class="bi bi-envelope"></i>
+        <i class="bi bi-twitter-x"></i>
+        <i class="bi bi-instagram"></i>
+      </div>
+      <p>support@squashit.com</p>
+    </div>
   </div>
 </div>
