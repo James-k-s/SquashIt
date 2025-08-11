@@ -28,5 +28,162 @@
 
   </div>
 <div class="show-tournament-container">
-  <h1><%= @tournament.name %></h1>
+  <div class="show-tournament-header">
+
+    <div id="show-tournament-title">
+      <i class="bi bi-trophy"></i>
+      <h2><%= @tournament.name %></h2>
+
+    <div id="show-tournament-status">
+      <p class="status-label"><%= @tournament.status.humanize %></p>
+    </div>
+    </div>
+
+  </div>
+
+    <div class="show-tournament-info">
+      <div class="show-tournament-details">
+        <div class="tournament-left-details">
+          <div class="tournament-left-details-cols">
+
+            <div class="detail-item">
+              <div class="detail-item-heading">
+                <i class="bi bi-calendar"></i>
+                <p>Start Date</p>
+              </div>
+              <p><%= @tournament.start_date.strftime('%m/%d/%Y') %></p>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-item-heading">
+                <i class="bi bi-calendar"></i>
+                <p>End Date</p>
+              </div>
+              <p><%= @tournament.end_date.strftime('%m/%d/%Y') %></p>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-item-heading">
+                <i class="bi bi-clock"></i>
+                <p>Start time</p>
+              </div>
+              <p><%= @tournament.start_date.strftime('%I:%M %p') %></p>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-item-heading">
+                <i class="bi bi-person"></i>
+                <p>Players</p>
+              </div>
+              <p><%= @tournament.min_players %>/<%= @tournament.max_players %></p>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-item-heading">
+                <i class="bi bi-geo-alt"></i>
+                <p>Location</p>
+              </div>
+              <p><%= @tournament.location %></p>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-item-heading">
+                <i class="bi bi-text-left"></i>
+                <p>Format</p>
+              </div>
+              <p><%= @tournament.bracket_type.capitalize %></p>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="tournament-right-details">
+          <div class="tournament-description-container">
+              <div class="icon-inline" id="green">
+              <i class="bi bi-card-text"></i>
+              <p id="tournament-description">Description</p>
+            </div>
+            <p><%= @tournament.description %></p>
+            </div>
+          <div class="start-tournament-button">
+            <p><i class="bi bi-play"></i>  Start Tournament</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="tournament-information-extra-container">
+
+      <div class="tournament-information-extra-left">
+        <div class="tournament-rules-heading">
+          <i class="bi bi-info-circle"></i>
+          <h3>Tournament Rules & Format</h3>
+        </div>
+        <div class="tournament-format">
+          <p id="tournament-bracket-type"><%= @tournament.bracket_type %> Format</p>
+          <% if @tournament.bracket_type == "Single Elimination"  %>
+            <p id="tournament-type-explained">This tournament follows a single elimination format where players are eliminated after losing one match. The bracket will be randomly seeded based on registration order.</p>
+          <% elsif @tournament.bracket_type == "Double Eliminiation"%>
+            <p id="tournament-type-explained">This tournament follows a double elimination format where players must lose twice before being eliminated. The bracket will be randomly seeded based on registration order.</p>
+          <% else %>
+            <p id="tournament-type-explained">This tournament follows a round robin format where each player competes against all other participants. Rankings are determined by the total number of matches won.</p>
+          <% end %>
+        </div>
+        <div class="rulesandequipment">
+          <div class="matchrules">
+            <p>Match Rules:</p>
+            <ul>
+              <li>Best of 5 games to 11 points</li>
+              <li>Must win by 2 points</li>
+              <li>90-second warm-up allowed</li>
+              <li>90-second break between games</li>
+            </ul>
+
+          </div>
+
+          <div class="matchequipment">
+            <p>Equipment:</p>
+            <ul>
+              <li>Approved squash balls provided</li>
+              <li>Players bring own racquet</li>
+              <li>Non-marking court shoes required</li>
+              <li>Protective eyewear mandatory</li>
+            </ul>
+
+          </div>
+
+        </div>
+
+        <div class="tournament-players">
+          <div class="tournament-players-head">
+
+            <div class="icon-inline registered-players" id="twentyfour">
+              <i class="bi bi-people" id="yellow"></i>
+              <h3>Registered Players (<%= @tournament.players.count %>/<%= @tournament.max_players %>)</h3>
+            </div>
+            <div class="invite-players">
+              <p><i class="bi bi-person-plus"></i>  Invite player</p>
+            </div>
+
+          </div>
+
+          <div class="registered-players-grid">
+            <% @tournament.players.each do |user| %>
+            <div class="player">
+              <p class="player-name"> <i class="bi bi-person"></i> <%= user.first_name %> <%= user.last_name %></p>
+              <p class="player-email"><%= user.email %></p>
+            </div>
+            <% end %>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tournament-information-extra-right">
+
+      </div>
+
+    </div>
+
 </div>

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_02_133637) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_11_214750) do
+  create_table "tournament_players", force: :cascade do |t|
+    t.integer "tournament_id", null: false
+    t.integer "user_id", null: false
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
+    t.index ["user_id"], name: "index_tournament_players_on_user_id"
+  end
+
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.string "location"
@@ -22,6 +32,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_02_133637) do
     t.datetime "updated_at", null: false
     t.integer "max_players"
     t.integer "min_players"
+    t.string "status", default: "scheduled"
+    t.string "description"
     t.index ["created_by_user_id"], name: "index_tournaments_on_created_by_user_id"
   end
 
@@ -33,9 +45,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_02_133637) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "tournament_players", "tournaments"
+  add_foreign_key "tournament_players", "users"
   add_foreign_key "tournaments", "users", column: "created_by_user_id"
 end

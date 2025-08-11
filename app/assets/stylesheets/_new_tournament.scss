@@ -111,3 +111,17 @@
 #helpful-tip-heading {
   margin-bottom: 16px;
 }
+
+#show-tournament-status {
+  p {
+
+    background-color: #618C72;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 12px;
+  }
+}

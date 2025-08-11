@@ -1,4 +1,5 @@
 class TournamentsController < ApplicationController
+    before_action :authenticate_user!, only: [:new, :create]
 
   def show
     @tournament = Tournament.find(params[:id])
