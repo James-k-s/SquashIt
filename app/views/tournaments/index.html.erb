@@ -1,0 +1,148 @@
+  <div class="nav-bar">
+    <div class="left-nav">
+      <div class="trophy-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+      <div class="nav-heading">
+        <h3><strong>SquashIt</strong></h3>
+        <p>Tournament manager</p>
+      </div>
+    </div>
+
+    <div class="middle-nav">
+      <%= link_to "Features", "#", class: "nav-link" %>
+      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", tournaments_path, class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+    </div>
+
+    <div class="right-nav">
+      <% if user_signed_in? %>
+        <i class="bi bi-person-circle user-profile-icon"></i>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="users-tournaments-container">
+    <div class="tournaments">
+
+      <div class="heading-category-tournaments">
+        <div class="tournaments-category-heading">
+          <i class="bi bi-calendar2-week"></i>
+          <h4>
+            Upcoming Tournaments
+            <%= "( #{@upcoming_tournaments.count} )" if user_signed_in? %>
+          </h4>
+        </div>
+
+        <div class="tournaments-category ">
+          <% if user_signed_in? %>
+            <% @upcoming_tournaments.each do |tournament| %>
+              <div class="tournament upcoming">
+                <%= link_to tournament_path(tournament) do %>
+                  <div class="tournament-name-heading" >
+                    <p id="p-tag-tournament-name"><%= tournament.name %></p>
+                  </div>
+
+                  <div class="tournament-individual-details">
+                    <div class="tournaments-details-left">
+                      <p><i class="bi bi-calendar-event"></i>  <%= tournament.start_date.strftime("%B %d, %Y") %></p>
+                      <p><i class="bi bi-people"></i>  <%= tournament.tournament_players.count %>/<%= tournament.max_players %></p>
+                      <p><i class="bi bi-geo-alt"></i>  <%= tournament.location %></p>
+                    </div>
+                    <div class="tournaments-details-right">
+                      <p><i class="bi bi-clock"></i>  <%= tournament.start_date.strftime("%I:%M %p") %></p>
+                      <p><i class="bi bi-trophy"></i>  <%= tournament.bracket_type %></p>
+                    </div>
+
+                  </div>
+                  <%= link_to "View tournament", tournament_path(tournament), class: "yello-hover-button" %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="heading-category-tournaments">
+
+        <div class="tournaments-category-heading">
+          <i class="bi bi-calendar2-week"></i>
+          <h4>
+            Active Tournaments
+            <%= "( #{@active_tournaments.count} )" if user_signed_in? %>
+          </h4>
+        </div>
+
+        <div class="tournaments-category ">
+          <% if user_signed_in? %>
+            <% @active_tournaments.each do |tournament| %>
+              <div class="tournament active">
+                <%= link_to tournament_path(tournament) do %>
+                  <div class="tournament-name-heading">
+                    <p id="p-tag-tournament-name"><%= tournament.name %></p>
+                  </div>
+                  <div class="tournament-individual-details">
+                    <div class="tournaments-details-left">
+                      <p><i class="bi bi-calendar-event"></i>  <%= tournament.start_date.strftime("%B %d, %Y") %></p>
+                      <p><i class="bi bi-people"></i>  <%= tournament.tournament_players.count %>/<%= tournament.max_players %></p>
+                      <p><i class="bi bi-geo-alt"></i>  <%= tournament.location %></p>
+                    </div>
+                    <div class="tournaments-details-right">
+                      <p><i class="bi bi-clock"></i>  <%= tournament.start_date.strftime("%I:%M %p") %></p>
+                      <p><i class="bi bi-trophy"></i>  <%= tournament.bracket_type %></p>
+                    </div>
+
+                  </div>
+                  <%= link_to "View tournament", tournament_path(tournament), class: "yello-hover-button" %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+
+      </div>
+
+      <div class="heading-category-tournaments">
+
+        <div class="tournaments-category-heading">
+          <i class="bi bi-calendar2-week"></i>
+          <h4>
+            Completed Tournaments
+            <%= "( #{@completed_tournaments.count} )" if user_signed_in? %>
+          </h4>
+        </div>
+
+        <div class="tournaments-category ">
+          <% if user_signed_in? %>
+            <% @completed_tournaments.each do |tournament| %>
+              <div class="tournament completed">
+                <%= link_to tournament_path(tournament) do %>
+                  <div class="tournament-name-heading">
+                    <p id="p-tag-tournament-name"><%= tournament.name %></p>
+                  </div>
+                  <div class="tournament-individual-details">
+                    <div class="tournaments-details-left">
+                      <p><i class="bi bi-calendar-event"></i>  <%= tournament.start_date.strftime("%B %d, %Y") %></p>
+                      <p><i class="bi bi-people"></i>  <%= tournament.tournament_players.count %>/<%= tournament.max_players %></p>
+                      <p><i class="bi bi-geo-alt"></i>  <%= tournament.location %></p>
+                    </div>
+                    <div class="tournaments-details-right">
+                      <p><i class="bi bi-clock"></i>  <%= tournament.start_date.strftime("%I:%M %p") %></p>
+                      <p><i class="bi bi-trophy"></i>  <%= tournament.bracket_type %></p>
+                    </div>
+
+                  </div>
+                <% end %>
+                <%= link_to "View tournament", tournament_path(tournament), class: "yello-hover-button" %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

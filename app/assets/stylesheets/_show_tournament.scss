@@ -33,9 +33,10 @@
 }
 
 .show-tournament-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 0.8px solid gray;
+  margin-bottom: 24px;
 }
 
 .detail-item {
@@ -47,6 +48,10 @@
     color: gray;
   }
 
+}
+
+.tournament-left-details {
+  width: 65%;
 }
 .tournament-left-details-cols {
   display: grid;
@@ -77,13 +82,13 @@
   width: 100%;
   p {
     padding:16px;
-    background-color: #33704C;
+    background-color: #618C72;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
-    width: 50%;
+    width: 100%;
   }
   i {
     margin-right: 8px;
@@ -97,14 +102,14 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 16px;
-  height: 100%;
+  width: 35%;
 
 }
 
 .tournament-information-extra-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .tournament-rules-heading {
@@ -126,6 +131,7 @@
 
 .tournament-information-extra-left {
   padding: 16px;
+  width: 55%;
 }
 
 .tournament-description-container {
@@ -192,11 +198,13 @@
 .invite-players {
   display: flex;
   flex-direction: row;
-  p {
-    color: #33704C;
-    border-radius: 8px ;
-    padding: 8px;
-    background-color: #F4BC0A;
+  color: #33704C;
+  border: 1px solid #F4BC0A;
+  border-radius: 8px ;
+  padding: 8px;
+  background-color: #F4BC0A;
+  i {
+    margin-right: 8px;
   }
 }
 
@@ -206,6 +214,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  margin-top: 24px;
 }
 .player {
   line-height: 0.5;
@@ -219,4 +228,47 @@
 .player-name {
   font-size: 16px;
   color: black;
+}
+
+.tournament-information-extra-right {
+  padding: 16px;
+  width: 35%;
+
+}
+
+.announcment-button {
+  border-radius: 8px;
+  width: 100%;
+  background-color: #33704C;
+  color: white;
+  border: none;
+  height: 35px;
+}
+
+.posted-announcements {
+  display: flex;
+  flex-direction: column;
+}
+
+.announcment-form {
+  margin-bottom: 32px;
+}
+
+.announcement {
+  line-height: 1.1;
+  margin-bottom: 20px;
+  border-bottom: solid 1px gray;
+  padding-bottom: 8px;
+}
+
+#announcement-text {
+  font-size: 13px;
+}
+
+.announcement-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 10px;
+  color: gray;
 }

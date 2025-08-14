@@ -78,6 +78,8 @@ body, html {
   text-align: center;
   width: 300px;
   height: 100%;
+  margin-right: 16px;
+  justify-content: flex-end;
 
   p {
     padding-top: 8px;
@@ -92,6 +94,14 @@ body, html {
     margin-left: 16px;
   }
 }
+
+.user-profile-icon {
+  font-size: 40px;
+  color: #33704C;
+  cursor: pointer;
+}
+
+
 
 .nav-link {
   text-decoration: none;
@@ -306,4 +316,11 @@ body, html {
     color: white;
     text-decoration: none;
   }
+}
+
+
+.user-profile-icon {
+  font-size: 28px;
+  color: #33704C;
+
 }

@@ -13,8 +13,9 @@
  *= require_tree .
  *= require_self
  */
-
- @import "home";
- @import "bootstrap";
- @import "_new_tournament";
- @import "_show_tournament";
+@import "bootstrap";
+@import "home";
+@import "_new_tournament";
+@import "_show_tournament";
+@import "_modals";
+@import "_index_tournaments";

@@ -1,0 +1,21 @@
+<h3 style="font-family:Arial,sans-serif;font-size:14px;margin:0 0 12px;">
+  You have been invited to <strong><%= @tournament.name %></strong>.
+</h3>
+<p style="font-family:Arial,sans-serif;font-size:14px;margin:0 0 8px;">
+  <u>Location</u>: <%= @tournament.location %>
+</p>
+<p style="font-family:Arial,sans-serif;font-size:14px;margin:0 0 16px;">
+  <u>Time</u>: <%= @tournament.start_date.strftime('%I:%M %p') %>
+</p>
+<p style="font-family:Arial,sans-serif;font-size:14px;margin:0 0 16px;">
+  <u>Starts on</u>: <%= @tournament.start_date.strftime("%B %d, %Y") %>
+</p>
+<p style="font-family:Arial,sans-serif;font-size:14px;margin:0 0 16px;">
+  <u>Ends on</u>: <%= @tournament.end_date.strftime("%B %d, %Y") %>
+</p>
+<p style="font-family:Arial,sans-serif;font-size:14px;margin:0 0 16px;">
+  <u>Tournament type</u>: <%= @tournament.bracket_type %>
+</p>
+<p style="font-family:Arial,sans-serif;font-size:14px;margin:0;">
+  <a href="<%= tournament_url(@tournament, invite_token: @invite.token) %>" style="color:#33704C;">View Tournament</a>
+</p>

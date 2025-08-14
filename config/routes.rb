@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get 'announcements/create'
+
+  devise_for :users, controllers: {
+    registrations: "users/registrations"
+  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -8,8 +12,16 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
 
-  resources :tournaments, only: [:show, :new, :create]
+  resources :tournaments, only: [:show, :new, :create, :index] do
+    resources :announcements, only: [:create]
+    resources :invites, only: [:create] do
+      collection { post :share }
+    end
+  end
+
+  post "invites/:token/accept", to: "invites#accept", as: :accept_invite
+  post "invites/:token/decline", to: "invites#decline", as: :decline_invite
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  # root "posts#indeSx"
 end

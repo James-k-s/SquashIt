@@ -1,0 +1,115 @@
+.users-tournaments-container {
+  width: 100%;
+  container: 100%;
+  padding: 16px;
+}
+
+.tournaments-category-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+}
+
+.tournaments {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+
+.tournament {
+  scroll-snap-align: start;
+  margin: 20px;
+  width: 370px;
+  width: 370px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #33704C !important;
+  text-decoration: none !important;
+
+}
+.tournament-name-heading {
+  display: flex;
+  flex-direction: row;
+  i {
+    font-size: 16px;
+  }
+}
+
+.tournaments .tournament a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tournament-individual-details {
+  padding: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.p-tag-tournament-name {
+  text-decoration: none !important;
+  color: #33704C !important;
+}
+
+
+.tournament-individual-details {
+  font-size: 12px;
+  text-decoration: none !important;
+  color: gray;
+  line-height: 1;
+}
+
+
+
+.tournaments,
+.tournaments-category {
+  display: grid;
+  grid-auto-flow: column;      /* one row, items left→right */
+  grid-auto-columns: 370px;    /* card width */
+  gap: 16px;
+
+  /* Span entire viewport width */
+  width: 1470px;
+         /* restore horizontal padding + bottom spacing */
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-gutter: stable both-edges;
+}
+
+.tournaments::-webkit-scrollbar,
+.tournaments-category::-webkit-scrollbar { height: 8px; }
+.tournaments::-webkit-scrollbar-thumb,
+.tournaments-category::-webkit-scrollbar-thumb {
+  background: #c8c8c8; border-radius: 8px;
+}
+
+
+.yello-hover-button {
+  color: #33704C;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid #33704C;
+  border-radius: 8px;
+  color: #33704C;
+}
+
+.yello-hover-button:hover {
+  background-color: #F4BC0A;
+  color: #33704C;
+}

@@ -14,18 +14,17 @@
     <div class="middle-nav">
       <%= link_to "Features", "#", class: "nav-link" %>
       <%= link_to "How it works", "#", class: "nav-link" %>
-      <%= link_to "Tournaments", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", tournaments_path, class: "nav-link" %>
       <%= link_to "Contact", "#", class: "nav-link" %>
 
     </div>
 
     <div class="right-nav">
       <% if user_signed_in? %>
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+        <i class="bi bi-person-circle user-profile-icon"></i>
       <% else %>
         <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
       <% end %>
-      <a href="#" id="create-nav-button"><strong>Create tournament</strong></a>
     </div>
 
   </div>

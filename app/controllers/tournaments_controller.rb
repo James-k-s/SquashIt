@@ -1,8 +1,45 @@
 class TournamentsController < ApplicationController
-    before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :index]
+
+  def index
+
+    if user_signed_in?
+
+      @upcoming_tournaments = Tournament
+      .joins(:tournament_players)
+      .where(tournament_players: { user_id: current_user.id })
+      .where(status: "Scheduled")
+      .distinct
+
+      @active_tournaments = Tournament
+      .joins(:tournament_players)
+      .where(tournament_players: { user_id: current_user.id })
+      .where(status: "Active")
+      .distinct
+
+      @completed_tournaments = Tournament
+      .joins(:tournament_players)
+      .where(tournament_players: { user_id: current_user.id })
+      .where(status: "Completed")
+      .distinct
+    end
+  end
 
   def show
     @tournament = Tournament.find(params[:id])
+    @announcements = @tournament.announcements if defined?(Announcement)
+
+    @pending_invite =
+      if params[:invite_token].present?
+        Invite.find_by(token: params[:invite_token], tournament_id: @tournament.id, status: "pending")
+      else
+        nil
+      end
+
+    # Persist token only for logged-out users (so we can finish after signup/login)
+    if @pending_invite && !user_signed_in?
+      session[:invite_token] = @pending_invite.token
+    end
   end
 
   def new

@@ -12,18 +12,17 @@
     <div class="middle-nav">
       <%= link_to "Features", "#", class: "nav-link" %>
       <%= link_to "How it works", "#", class: "nav-link" %>
-      <%= link_to "Tournaments", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", tournaments_path, class: "nav-link" %>
       <%= link_to "Contact", "#", class: "nav-link" %>
 
     </div>
 
     <div class="right-nav">
       <% if user_signed_in? %>
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+        <i class="bi bi-person-circle user-profile-icon"></i>
       <% else %>
         <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
       <% end %>
-      <a href="#" id="create-nav-button"><strong>Create tournament</strong></a>
     </div>
 
   </div>
@@ -75,7 +74,7 @@
                 <i class="bi bi-person"></i>
                 <p>Players</p>
               </div>
-              <p><%= @tournament.min_players %>/<%= @tournament.max_players %></p>
+              <p><%= @tournament.players.count %>/<%= @tournament.max_players %></p>
             </div>
 
             <div class="detail-item">
@@ -100,8 +99,8 @@
         <div class="tournament-right-details">
           <div class="tournament-description-container">
               <div class="icon-inline" id="green">
-              <i class="bi bi-card-text"></i>
-              <p id="tournament-description">Description</p>
+
+              <h5 id="tournament-description"><i class="bi bi-card-text"></i>  Description</h5>
             </div>
             <p><%= @tournament.description %></p>
             </div>
@@ -161,8 +160,43 @@
               <i class="bi bi-people" id="yellow"></i>
               <h3>Registered Players (<%= @tournament.players.count %>/<%= @tournament.max_players %>)</h3>
             </div>
-            <div class="invite-players">
-              <p><i class="bi bi-person-plus"></i>  Invite player</p>
+
+           <button type="button" class="invite-players" data-bs-toggle="modal" data-bs-target="#invitePlayersModal">
+              <i class="bi bi-person-plus"></i> Invite Players
+            </button>
+
+            <div class="modal fade" id="invitePlayersModal" tabindex="-1" aria-labelledby="invitePlayersModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="invitePlayersModalLabel">Invite Players</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="invite-with-text">
+                      <p>Share to a group chat:</p>
+                      <button type="button"
+                              class="btn btn-outline-primary"
+                              id="copy-share-link"
+                              data-copy-share-link
+                              data-url="<%= share_tournament_invites_path(@tournament, format: :json) %>">
+                        <i class="bi bi-link-45deg"></i> Copy share link
+                      </button>
+                    </div>
+
+                    <div class="invite-with-text">
+                      <p>Invite a player:</p>
+                      <%= form_with model: [@tournament, Invite.new], url: tournament_invites_path(@tournament), local: true do |f| %>
+                        <%= f.email_field :email, placeholder: "player@email.com" %>
+                        <%= f.submit "Send invite", id: "invite-submit-button" %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -181,9 +215,95 @@
       </div>
 
       <div class="tournament-information-extra-right">
+        <div class="icon-inline">
+          <h5><i class="bi bi-chat-left-text"></i>  Announcements</h5>
+        </div>
+
+        <div class="announcment-form">
+          <% if user_signed_in? && current_user == @tournament.created_by_user %>
+            <%= form_with(model: [@tournament, Announcement.new], local: true, class: "announcement-form") do |f| %>
+              <div class="mb-2">
+                <%= f.text_area :body, rows: 3, placeholder: "Write announcement...", class: "form-control" %>
+              </div>
+              <%= f.submit "Post", class: "announcment-button" %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="posted-announcements">
+          <% @announcements.each do |announcement| %>
+            <div class="announcement">
+              <p id="announcement-text"><%= announcement.body %></p>
+              <div class="announcement-info">
+                <p>Organizer: <%= announcement.user.first_name %></p>
+                <p><%= announcement.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
 
       </div>
 
     </div>
 
 </div>
+<div class="home-footer">
+    <div class="footer-one">
+      <div class="footer-logo">
+        <strong><i class="bi bi-trophy trophy-footer-logo"></i></strong>
+        <div class="logo-text">
+          <p><strong>SquashIt</strong></p>
+          <p>Tournament manager</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-two">
+      <h6>Product</h6>
+      <p>Features</p>
+      <p>How it works</p>
+      <p>Tournaments</p>
+      <p>Pricing</p>
+    </div>
+
+    <div class="footer-three">
+      <h6>Resources</h6>
+      <p>Help center</p>
+      <p>Community</p>
+      <p>Blog</p>
+
+    </div>
+
+    <div class="footer-four">
+      <h6>Connect</h6>
+      <div class="footer-socials">
+        <i class="bi bi-envelope"></i>
+        <i class="bi bi-twitter-x"></i>
+        <i class="bi bi-instagram"></i>
+      </div>
+      <p>support@squashit.com</p>
+    </div>
+  </div>
+
+  <% if @pending_invite %>
+    <div id="invite-popup-backdrop" data-invite-backdrop></div>
+    <div id="invite-popup" class="popup" data-invite-popup>
+      <button type="button" class="invite-close" data-invite-close aria-label="Close">
+        <i class="bi bi-x-lg" data-invite-close></i>
+      </button>
+      <div class="pop-up-icon">
+        <i class="bi bi-trophy" id="yellow"></i>
+      </div>
+      <p>You have been invited to join the <%= @tournament.name %> tournament.</p>
+      <h4>Tournament Details:</h4>
+      <div class="invite-details">
+        <p>Name: <%= @tournament.name %></p>
+        <p>Date: <%= @tournament.start_date.strftime("%B %d, %Y") %></p>
+        <p>Time: <%= @tournament.start_date.strftime("%I:%M %p") %></p>
+        <p>Location: <%= @tournament.location %></p>
+        <p>Organizer: <%= @tournament.created_by_user.first_name %> <%= @tournament.created_by_user.last_name %></p>
+      </div>
+      <%= button_to "Accept", accept_invite_path(token: @pending_invite.token), method: :post, class: "btn btn-success" %>
+      <%= button_to "Decline", decline_invite_path(token: @pending_invite.token), method: :post, class: "btn btn-danger" %>
+    </div>
+  <% end %>

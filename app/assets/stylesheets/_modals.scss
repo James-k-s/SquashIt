@@ -1,0 +1,133 @@
+.modal-header {
+  border-bottom: none !important;
+}
+
+.modal-footer {
+  border-top: none !important;
+}
+
+.btn-close {
+  font-size: 14px !important;
+}
+
+.btn {
+  background-color: #33704C !important;
+}
+
+.btn-danger {
+  border: none !important;
+}
+
+.pop-up-icon {
+  margin-top: 12px;
+  i {
+    font-size: 48px;
+
+  }
+  margin-bottom: 12px;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+  z-index: 9999;
+}
+
+
+#invite-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65); // increase opacity for stronger backdrop
+  backdrop-filter: blur(2px);   // optional subtle blur
+  z-index: 1040;
+}
+
+#invite-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  padding: 20px 24px;
+  width: 320px;
+  max-width: 90vw;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+  z-index: 1050;
+  text-align: center;
+}
+
+#invite-popup p {
+  margin-bottom: 16px;
+}
+
+#invite-popup form {
+  display: inline-block;
+  margin: 0 6px;
+}
+
+#invite-popup {
+  width: 400px !important;
+}
+
+.invite-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  border: solid 1px #33704C;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+.flash-container { position: fixed; top: 12px; right: 12px; z-index: 2000; }
+.flash { padding: 10px 14px; border-radius: 6px; margin-bottom: 8px; background:#33704C; color:#fff; }
+.flash-alert { background:#c0392b; }
+.flash-notice { background:#33704C; }
+
+.flash-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+.flash-close:focus { outline: 2px solid #fff3; outline-offset: 2px; }
+
+#invite_email {
+  border-radius: 6px ;
+  border: 1px solid #33704C;
+  padding: 8px;
+}
+#invite-submit-button {
+  border-radius: 6px !important;
+  border: 1px solid #33704C !important;
+  padding: 8px !important;
+  background-color: #33704C !important;
+  color: white !important;
+}
+#copy-share-link {
+  margin-bottom: 16px;
+  color: white;
+  border: none;
+}
+
+.invite-with-text {
+  margin-bottom: 12px;
+}
+
+.invite-with-text p {
+  line-height: 2.1;   /* tighten only the text */
+  margin: 0;
+}
