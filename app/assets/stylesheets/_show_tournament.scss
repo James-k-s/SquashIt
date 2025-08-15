@@ -82,7 +82,7 @@
   width: 100%;
   p {
     padding:16px;
-    background-color: #618C72;
+    background-color: #33704C;
     color: white;
     display: flex;
     justify-content: center;
@@ -272,3 +272,6 @@
   font-size: 10px;
   color: gray;
 }
+
+.start-tournament-button { cursor: pointer; display: inline-block; text-decoration: none; color: inherit; }
+.start-tournament-button:hover { text-decoration: none; }

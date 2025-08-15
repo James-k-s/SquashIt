@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
   resources :tournaments, only: [:show, :new, :create, :index] do
+    member { patch :start }  # => start_tournament_path(@tournament)
     resources :announcements, only: [:create]
     resources :invites, only: [:create] do
       collection { post :share }

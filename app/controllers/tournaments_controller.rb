@@ -57,6 +57,26 @@ class TournamentsController < ApplicationController
     end
   end
 
+    def start
+    @tournament = Tournament.find(params[:id])
+    if @tournament.status == "Scheduled"
+      unless current_user.id == @tournament.created_by_user_id
+        return redirect_to @tournament, alert: "Only the organizer can start the tournament."
+      end
+
+      if @tournament.update(status: "Active")
+        @tournament.announcements.create(body: "🔵 The tournament has started!", user_id: current_user.id)
+        redirect_to @tournament, notice: "Tournament started."
+      else
+        redirect_to @tournament, alert: @tournament.errors.full_messages.to_sentence
+      end
+    elsif @tournament.status == "Active"
+      redirect_to @tournament, alert: "Tournament is already active."
+    else
+      redirect_to @tournament, alert: "Tournament is already completed."
+    end
+  end
+
   private
 
   def tournament_params
