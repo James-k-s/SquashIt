@@ -1,0 +1,60 @@
+.bracket-container {
+  display: flex;
+  gap: 50px;
+  padding: 24px;
+}
+
+.bracket-container-with-heading {
+  margin: 0;
+  padding: 16px;
+}
+
+.center-bracket {
+  display: flex;
+  justify-content: center;
+  border: 1px solid #33704C;
+  padding: 16px;
+  border-radius: 16px;
+  margin: 24px;
+}
+
+.bracket-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+}
+
+.round {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; /* Automatically space matches vertically */
+  min-height: 600px;
+}
+
+.match {
+  display: flex;
+  flex-direction: column;
+}
+
+.bracket-player {
+  padding: 16px;
+  border: 1px solid #ccc;
+  margin: 5px 0;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.bracket-player-1 {
+  background-color: #33704C;
+}
+
+.bracket-player-2 {
+  margin-bottom: 28px;
+  background-color: #677E71;
+}
+
+/* Container to position arrows relative to matches */
+.round {
+  position: relative;
+}

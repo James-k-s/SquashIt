@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_13_123844) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_17_133741) do
   create_table "announcements", force: :cascade do |t|
     t.integer "tournament_id", null: false
     t.integer "user_id", null: false
@@ -34,12 +34,40 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_13_123844) do
     t.index ["tournament_id"], name: "index_invites_on_tournament_id"
   end
 
+  create_table "matches", force: :cascade do |t|
+    t.integer "tournament_id", null: false
+    t.integer "player1_id"
+    t.integer "player2_id"
+    t.integer "winner_id"
+    t.integer "match_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "next_match_id"
+    t.integer "position_in_next_match"
+    t.string "status"
+    t.integer "best_of"
+    t.integer "round_number"
+    t.index ["tournament_id"], name: "index_matches_on_tournament_id"
+  end
+
+  create_table "rounds", force: :cascade do |t|
+    t.integer "match_id", null: false
+    t.integer "round_number"
+    t.integer "player1_score"
+    t.integer "player2_score"
+    t.integer "winner_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_rounds_on_match_id"
+  end
+
   create_table "tournament_players", force: :cascade do |t|
     t.integer "tournament_id", null: false
     t.integer "user_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tournament_id", "user_id"], name: "index_tournament_players_on_tournament_id_and_user_id", unique: true
     t.index ["tournament_id"], name: "index_tournament_players_on_tournament_id"
     t.index ["user_id"], name: "index_tournament_players_on_user_id"
   end
@@ -78,6 +106,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_13_123844) do
   add_foreign_key "announcements", "users"
   add_foreign_key "invites", "tournaments"
   add_foreign_key "invites", "users", column: "invited_user_id"
+  add_foreign_key "matches", "tournaments"
+  add_foreign_key "rounds", "matches"
   add_foreign_key "tournament_players", "tournaments"
   add_foreign_key "tournament_players", "users"
   add_foreign_key "tournaments", "users", column: "created_by_user_id"

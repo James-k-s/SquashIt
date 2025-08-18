@@ -1,0 +1,62 @@
+<div class="nav-bar">
+    <div class="left-nav">
+      <div class="trophy-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+      <div class="nav-heading">
+        <h3><strong>SquashIt</strong></h3>
+        <p>Tournament manager</p>
+      </div>
+    </div>
+
+    <div class="middle-nav">
+<%= link_to "Home", root_path, class: "nav-link" %>      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", tournaments_path, class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+    </div>
+
+    <div class="right-nav">
+      <% if user_signed_in? %>
+        <i class="bi bi-person-circle user-profile-icon"></i>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+      <% end %>
+    </div>
+
+  </div>
+
+<div class="bracket-container-with-heading">
+  <h1><%= @tournament.name %></h1>
+  <div class="center-bracket">
+    <div class="bracket-container">
+      <% total_rounds = @total_rounds %>
+
+      <% (1..total_rounds).each do |round_number| %>
+        <div class="round-with-header">
+        <h2>Round <%= round_number %></h2>
+          <div class="round">
+
+            <% matches_in_round = 2**(total_rounds - round_number) %>
+            <% round_matches = (@matches_by_round[round_number] || []) %>
+
+            <% # pad to the expected size so we render all slots %>
+            <% filled = Array.new(matches_in_round) { nil } %>
+            <% round_matches.each_with_index { |m, i| filled[i] = m } %>
+
+            <% filled.each do |match| %>
+              <div class="match">
+                <div class="bracket-player bracket-player-1 <%= 'winner' if match&.winner_id == match&.player1_id %>">
+                  <%= match&.player1&.first_name || "TBD" %>
+                </div>
+                <div class="bracket-player bracket-player-2 <%= 'winner' if match&.winner_id == match&.player2_id %>">
+                  <%= match&.player2&.first_name || "TBD" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

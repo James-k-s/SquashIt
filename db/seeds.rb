@@ -11,6 +11,8 @@
 
 puts "Clearing existing data..."
 
+Round.delete_all
+Match.delete_all
 Invite.delete_all         # add this
 Announcement.delete_all
 TournamentPlayer.delete_all
@@ -33,12 +35,26 @@ ellie = User.create!(first_name: "Ellie", last_name: "Shuttleworth", email: "ell
 
 milo = User.create!(first_name: "Milo", last_name: "Vingoe", email: "milo@milo.com", password: "password", password_confirmation: "password")
 
+admir = User.create!(first_name: "Admir", last_name: "Vingoe", email: "admir@admir.com", password: "password", password_confirmation: "password")
+
+dricus = User.create!(first_name: "Dricus", last_name: "Vingoe", email: "dricus@dricus.com", password: "password", password_confirmation: "password")
+
+khamzat = User.create!(first_name: "Khamzat", last_name: "Vingoe", email: "khamzat@khamzat.com", password: "password", password_confirmation: "password")
+
+fin = User.create!(first_name: "Fin", last_name: "Vingoe", email: "fin@fin.com", password: "password", password_confirmation: "password")
+
+
+
 james.save!
 jade.save!
 sian.save!
 annabel.save!
 ellie.save!
 milo.save!
+admir.save!
+dricus.save!
+khamzat.save!
+fin.save!
 
 puts "Default user created! #{User.all.count} user(s) in the database."
 
@@ -64,7 +80,7 @@ Tournament.create!(
   location: "City Sports Center",
   description: "A thrilling competition to close out the year.",
   bracket_type: "Double Elimination",
-  max_players: 64,
+  max_players: 32,
   min_players: 16,
   created_by_user_id: User.first.id,
   status: "Scheduled"
@@ -93,7 +109,7 @@ Tournament.create!(
   max_players: 32,
   min_players: 8,
   created_by_user_id: User.first.id,
-  status: "Active"
+  status: "Scheduled"
 )
 
 Tournament.create!(
@@ -207,6 +223,17 @@ TournamentPlayer.create!(
   status: "registered"
 )
 
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: admir.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: dricus.id,
+  status: "registered"
+)
 
 puts "Creating #{TournamentPlayer.count} tournament players..."
 

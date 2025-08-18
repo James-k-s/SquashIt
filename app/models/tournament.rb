@@ -4,6 +4,7 @@ class Tournament < ApplicationRecord
   has_many :players, through: :tournament_players, source: :user
   has_many :announcements, dependent: :destroy
   has_many :invites, dependent: :destroy
+  has_many :matches, dependent: :destroy
 
 
   validates :name, presence: true

@@ -102,12 +102,18 @@
               <h5 id="tournament-description"><i class="bi bi-card-text"></i>  Description</h5>
             </div>
             <p><%= @tournament.description %></p>
-            </div>
-          <%= link_to start_tournament_path(@tournament),
+          </div>
+
+          <% if @tournament.status == "Scheduled" %>
+            <%= link_to start_tournament_path(@tournament),
                       data: { turbo_method: :patch, turbo_confirm: "Start this tournament now?" },
                       class: "start-tournament-button" do %>
-            <p><i class="bi bi-play"></i>  Start Tournament</p>
+              <p><i class="bi bi-play"></i>  Start Tournament</p>
+            <% end %>
+          <% else %>
+            <%= link_to "View Bracket", bracket_tournament_path(@tournament), class: "btn btn-primary view-bracket-button" %>
           <% end %>
+
 
         </div>
       </div>

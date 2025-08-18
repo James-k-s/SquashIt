@@ -46,6 +46,8 @@ class TournamentsController < ApplicationController
     @tournament = Tournament.new
   end
 
+
+
   def create
     @tournament = Tournament.new(tournament_params)
     @tournament.created_by_user_id = current_user.id
@@ -57,25 +59,58 @@ class TournamentsController < ApplicationController
     end
   end
 
-    def start
+  def start
     @tournament = Tournament.find(params[:id])
+
     if @tournament.status == "Scheduled"
       unless current_user.id == @tournament.created_by_user_id
         return redirect_to @tournament, alert: "Only the organizer can start the tournament."
       end
 
-      if @tournament.update(status: "Active")
-        @tournament.announcements.create(body: "🔵 The tournament has started!", user_id: current_user.id)
-        redirect_to @tournament, notice: "Tournament started."
-      else
-        redirect_to @tournament, alert: @tournament.errors.full_messages.to_sentence
+      Tournament.transaction do
+        if @tournament.update(status: "Active")
+          # Generate the bracket here
+          TournamentBracket.new(@tournament).generate_single_elimination
+
+          # Create announcement
+          @tournament.announcements.create!(
+            body: "🔵 The tournament has started!",
+            user_id: current_user.id
+          )
+          redirect_to @tournament, notice: "Tournament started and bracket generated."
+        else
+          redirect_to @tournament, alert: @tournament.errors.full_messages.to_sentence
+        end
       end
+
     elsif @tournament.status == "Active"
       redirect_to @tournament, alert: "Tournament is already active."
     else
       redirect_to @tournament, alert: "Tournament is already completed."
     end
   end
+
+  def bracket
+    @tournament = Tournament.find(params[:id])
+    players_count = @tournament.tournament_players.count
+    @total_rounds = players_count > 1 ? Math.log2(players_count).ceil : 0
+
+    @matches_by_round = @tournament.matches
+                                  .includes(:player1, :player2)
+                                  .order(:round_number, :match_number, :id)
+                                  .group_by(&:round_number)
+  end
+
+  def calculate_round_number(match)
+    round = 1
+    current = match
+    while current.next_match_id
+      round += 1
+      current = Match.find(current.next_match_id)
+    end
+    round
+  end
+
 
   private
 
