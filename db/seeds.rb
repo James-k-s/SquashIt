@@ -43,7 +43,21 @@ khamzat = User.create!(first_name: "Khamzat", last_name: "Vingoe", email: "khamz
 
 fin = User.create!(first_name: "Fin", last_name: "Vingoe", email: "fin@fin.com", password: "password", password_confirmation: "password")
 
+walter = User.create!(first_name: "walter", last_name: "Vingoe", email: "walter@walter.com", password: "password", password_confirmation: "password")
 
+pine = User.create!(first_name: "pine", last_name: "Vingoe", email: "pine@pine.com", password: "password", password_confirmation: "password")
+
+tree = User.create!(first_name: "tree", last_name: "Vingoe", email: "tree@tree.com", password: "password", password_confirmation: "password")
+
+forest = User.create!(first_name: "forest", last_name: "Vingoe", email: "forest@forest.com", password: "password", password_confirmation: "password")
+
+beach = User.create!(first_name: "beach", last_name: "Vingoe", email: "beach@beach.com", password: "password", password_confirmation: "password")
+
+hunter = User.create!(first_name: "hunter", last_name: "Vingoe", email: "hunter@hunter.com", password: "password", password_confirmation: "password")
+
+barney = User.create!(first_name: "barney", last_name: "Vingoe", email: "barney@barney.com", password: "password", password_confirmation: "password")
+
+ted = User.create!(first_name: "ted", last_name: "Vingoe", email: "ted@ted.com", password: "password", password_confirmation: "password")
 
 james.save!
 jade.save!
@@ -55,6 +69,14 @@ admir.save!
 dricus.save!
 khamzat.save!
 fin.save!
+walter.save!
+pine.save!
+tree.save!
+forest.save!
+beach.save!
+hunter.save!
+barney.save!
+ted.save!
 
 puts "Default user created! #{User.all.count} user(s) in the database."
 
@@ -112,7 +134,7 @@ Tournament.create!(
   status: "Scheduled"
 )
 
-Tournament.create!(
+brixton = Tournament.create!(
   name: "Brixton Squash",
   start_date: "2025-09-01 10:00:00",
   end_date: "2025-09-05 18:00:00",
@@ -124,6 +146,8 @@ Tournament.create!(
   created_by_user_id: User.first.id,
   status: "Scheduled"
 )
+
+brixton.save!
 
 sixth = Tournament.create!(
   name: "Clapham Squash",
@@ -234,6 +258,97 @@ TournamentPlayer.create!(
   user_id: dricus.id,
   status: "registered"
 )
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: walter.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: pine.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: tree.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: forest.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: beach.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: hunter.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: barney.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: Tournament.first.id,
+  user_id: ted.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: tree.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: jade.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: sian.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: annabel.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: ellie.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: milo.id,
+  status: "registered"
+)
+
+TournamentPlayer.create!(
+  tournament_id: brixton.id,
+  user_id: forest.id,
+  status: "registered"
+)
+
 
 puts "Creating #{TournamentPlayer.count} tournament players..."
 

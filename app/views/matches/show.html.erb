@@ -1,0 +1,50 @@
+<div class="nav-bar">
+    <div class="left-nav">
+      <div class="trophy-icon">
+        <i class="bi bi-trophy"></i>
+      </div>
+      <div class="nav-heading">
+        <h3><strong>SquashIt</strong></h3>
+        <p>Tournament manager</p>
+      </div>
+    </div>
+
+    <div class="middle-nav">
+<%= link_to "Home", root_path, class: "nav-link" %>      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Tournaments", tournaments_path, class: "nav-link" %>
+      <%= link_to "Contact", "#", class: "nav-link" %>
+
+    </div>
+
+    <div class="right-nav">
+      <% if user_signed_in? %>
+        <i class="bi bi-person-circle user-profile-icon"></i>
+      <% else %>
+        <%= link_to "Sign in", new_user_session_path, class: "nav-link" %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="match-scoring-container">
+    <div class="match-score-container">
+        <div class="live-score-label">
+          <h4>Current set - Set <%= @current_round&.round_number || 1 %></h4>
+          <p class="live-text-label">live</p>
+        </div>
+
+        <div class="match-current-score">
+          <div class="player1-score">
+            <h5 class="player1-initials"><%= (@match.player1&.first_name.to_s[0,1].upcase.presence || "?") + (@match.player1&.last_name.to_s[0,1].upcase.presence || "?") %></h5>
+            <h1><%= @current_round&.player1_score || 0 %></h1>
+          </div>
+
+          <div class="player2-score">
+            <h5 class="player2-initials"><%= (@match.player2&.first_name.to_s[0,1].upcase.presence || "?") + (@match.player2&.last_name.to_s[0,1].upcase.presence || "?") %></h5>
+            <h1><%= @current_round&.player2_score || 0 %></h1>
+          </div>
+        </div>
+    </div>
+
+
+  </div>

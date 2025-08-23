@@ -51,3 +51,67 @@ document.addEventListener("click", async (e) => {
     alert("Could not generate/copy link.");
   }
 });
+
+// ...existing imports and code...
+
+function connectMatches() {
+  const svg = document.getElementById("bracket-lines");
+  const container = document.querySelector(".bracket-container");
+  if (!svg || !container) return;
+
+  // Size SVG to match the scrollable bracket area
+  const width = container.scrollWidth;
+  const height = container.scrollHeight;
+  svg.setAttribute("width", width);
+  svg.setAttribute("height", height);
+
+  svg.innerHTML = ""; // reset paths
+
+  document.querySelectorAll(".match[id^='match-']").forEach(matchEl => {
+    const nextId = matchEl.dataset.nextMatchId;
+    if (!nextId) return;
+
+    const targetEl = document.getElementById(`match-${nextId}`);
+    if (!targetEl) return;
+
+    const r1 = matchEl.getBoundingClientRect();
+    const r2 = targetEl.getBoundingClientRect();
+    const rSvg = svg.getBoundingClientRect();
+
+    const x1 = r1.right - rSvg.left;
+    const y1 = r1.top + r1.height / 2 - rSvg.top;
+    const x2 = r2.left - rSvg.left;
+    const y2 = r2.top + r2.height / 2 - rSvg.top;
+
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.setAttribute("d", `M ${x1} ${y1} C ${(x1 + x2) / 2} ${y1}, ${(x1 + x2) / 2} ${y2}, ${x2} ${y2}`);
+    path.setAttribute("stroke", "#444");
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke-width", "3");
+    path.setAttribute("stroke-linecap", "round");
+    path.style.opacity = "0.8";
+
+    svg.appendChild(path);
+  });
+}
+
+function scheduleConnect() {
+  // Wait for Turbo render + layout/paint to settle
+  requestAnimationFrame(() => requestAnimationFrame(connectMatches));
+}
+
+document.addEventListener("turbo:load", scheduleConnect);
+document.addEventListener("turbo:render", scheduleConnect);
+// Fallback for full reload
+document.addEventListener("DOMContentLoaded", scheduleConnect);
+
+// Keep updates in sync with UI changes
+window.addEventListener("resize", scheduleConnect);
+document.addEventListener("scroll", scheduleConnect, { passive: true });
+document.addEventListener("wheel", scheduleConnect, { passive: true });
+
+// If the bracket scrolls horizontally inside a container, also:
+document.addEventListener("turbo:load", () => {
+  const scroller = document.querySelector(".bracket-container");
+  if (scroller) scroller.addEventListener("scroll", scheduleConnect, { passive: true });
+});

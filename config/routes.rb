@@ -16,6 +16,8 @@ Rails.application.routes.draw do
     member do
       patch :start    # => start_tournament_path(@tournament)
       get :bracket    # => bracket_tournament_path(@tournament)
+      get "bracket/:match_id", to: "matches#show", as: :bracket_match
+
     end
 
     resources :announcements, only: [:create]

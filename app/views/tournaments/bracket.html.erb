@@ -29,34 +29,65 @@
 <div class="bracket-container-with-heading">
   <h1><%= @tournament.name %></h1>
   <div class="center-bracket">
-    <div class="bracket-container">
+    <div class="bracket-container" id="bracket">
       <% total_rounds = @total_rounds %>
 
       <% (1..total_rounds).each do |round_number| %>
         <div class="round-with-header">
-        <h2>Round <%= round_number %></h2>
-          <div class="round">
-
             <% matches_in_round = 2**(total_rounds - round_number) %>
             <% round_matches = (@matches_by_round[round_number] || []) %>
 
-            <% # pad to the expected size so we render all slots %>
+            <% players_in_round = matches_in_round * 2 %> <!-- slots -->
+            <%# Or actual players present: %>
+            <%# actual_players = round_matches.sum { |m| [m&.player1_id, m&.player2_id].compact.size } %>
+
+            <% label =
+                case players_in_round
+                when 8 then "Quarter finals"
+                when 4 then "Semi finals"
+                when 2 then "Final"
+                else "Round #{round_number}"
+                end %>
+            <p><%= label %></p>
+
+          <div class="round">
+            <% matches_in_round = 2**(total_rounds - round_number) %>
+            <% round_matches = (@matches_by_round[round_number] || []) %>
             <% filled = Array.new(matches_in_round) { nil } %>
             <% round_matches.each_with_index { |m, i| filled[i] = m } %>
 
             <% filled.each do |match| %>
-              <div class="match">
-                <div class="bracket-player bracket-player-1 <%= 'winner' if match&.winner_id == match&.player1_id %>">
-                  <%= match&.player1&.first_name || "TBD" %>
+              <% if match.present? %>
+                <%= link_to bracket_match_tournament_path(@tournament, match_id: match.id), class: "match-link" do %>
+                  <div class="match"
+                      id="match-<%= match.id %>"
+                      data-next-match-id="<%= match.next_match_id %>">
+                    <div class="bracket-player bracket-player-1 <%= 'winner' if match.winner_id == match.player1_id %>">
+                      <%= (match.player1&.first_name&.capitalize).presence || "TBD" %>
+                    </div>
+
+                    <p class="vs">vs</p>
+
+                    <div class="bracket-player bracket-player-2 <%= 'winner' if match.winner_id == match.player2_id %>">
+                      <%= (match.player2&.first_name&.capitalize).presence || "TBD" %>
+                    </div>
+                  </div>
+                <% end %>
+              <% else %>
+                <div class="match"
+                    id="match-<%= "tbd-#{round_number}-#{SecureRandom.hex(3)}" %>"
+                    data-next-match-id="">
+                  <div class="bracket-player bracket-player-1">TBD</div>
+                  <p class="vs">vs</p>
+                  <div class="bracket-player bracket-player-2">TBD</div>
                 </div>
-                <div class="bracket-player bracket-player-2 <%= 'winner' if match&.winner_id == match&.player2_id %>">
-                  <%= match&.player2&.first_name || "TBD" %>
-                </div>
-              </div>
+              <% end %>
             <% end %>
           </div>
         </div>
       <% end %>
+      <!-- SVG overlay -->
+      <svg id="bracket-lines" class="bracket-lines"  aria-hidden="true"></svg>
     </div>
   </div>
 </div>
