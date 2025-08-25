@@ -10,7 +10,7 @@
     </div>
 
     <div class="middle-nav">
-<%= link_to "Home", root_path, class: "nav-link" %>      <%= link_to "How it works", "#", class: "nav-link" %>
+      <%= link_to "Home", root_path, class: "nav-link" %>      <%= link_to "How it works", "#", class: "nav-link" %>
       <%= link_to "Tournaments", tournaments_path, class: "nav-link" %>
       <%= link_to "Contact", "#", class: "nav-link" %>
 
@@ -26,25 +26,89 @@
 
   </div>
 
-  <div class="match-scoring-container">
-    <div class="match-score-container">
-        <div class="live-score-label">
-          <h4>Current set - Set <%= @current_round&.round_number || 1 %></h4>
-          <p class="live-text-label">live</p>
-        </div>
-
-        <div class="match-current-score">
-          <div class="player1-score">
-            <h5 class="player1-initials"><%= (@match.player1&.first_name.to_s[0,1].upcase.presence || "?") + (@match.player1&.last_name.to_s[0,1].upcase.presence || "?") %></h5>
-            <h1><%= @current_round&.player1_score || 0 %></h1>
-          </div>
-
-          <div class="player2-score">
-            <h5 class="player2-initials"><%= (@match.player2&.first_name.to_s[0,1].upcase.presence || "?") + (@match.player2&.last_name.to_s[0,1].upcase.presence || "?") %></h5>
-            <h1><%= @current_round&.player2_score || 0 %></h1>
-          </div>
-        </div>
+  <div class="match-details-container">
+    <div class="icon-inline">
+      <h5><i class="bi bi-trophy yellow"></i></h5>
+      <h4>Match Details</h4>
     </div>
 
+    <div class="match-real-details">
+      <p><i class="bi bi-geo-alt"></i>  <%= @max_rounds %></p>
+      <p><i class="bi bi-people"></i>  Best out of 5 sets</p>
+      <p><i class="bi bi-calendar-date"></i>  <%= @tournament.start_date.strftime("%B %d, %Y") %></p>
+    </div>
+
+  </div>
+
+  <div class="match-scoring-container">
+    <%= turbo_frame_tag "match_score" do %>
+      <%= render "matches/match_score",
+          match: @match,
+          round: @current_round,
+          round_numbers: @round_numbers,
+          rounds_by_number: @rounds_by_number %>
+    <% end %>
+  </div>
+    <div class="matchplayersandsets">
+      <div class="left-side-players">
+        <div class="players-1-details">
+          <div class="intialsandname">
+              <h5 class="player1-initials"><%= (@match.player1&.first_name.to_s[0,1].upcase.presence || "?") + (@match.player1&.last_name.to_s[0,1].upcase.presence || "?") %></h5>
+              <h5><%=(@match.player1&.first_name&.capitalize).presence %> <%=(@match.player1&.last_name&.capitalize).presence %></h5>
+          </div>
+          <div class="sets-won-by-player">
+            <p><%= @match.sets_won_by(@match.player1_id) || 0 %></p>
+            <p>Sets won</p>
+          </div>
+        </div>
+
+        <div class="players-2-details">
+          <div class="intialsandname">
+              <h5 class="player2-initials"><%= (@match.player2&.first_name.to_s[0,1].upcase.presence || "?") + (@match.player2&.last_name.to_s[0,1].upcase.presence || "?") %></h5>
+              <h5><%=(@match.player2&.first_name&.capitalize).presence %> <%=(@match.player2&.last_name&.capitalize).presence %></h5>
+          </div>
+          <div class="sets-won-by-player">
+            <p><%= @match.sets_won_by(@match.player2_id) || 0 %></p>
+            <p>Sets won</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-side-sets">
+        <h5>Scoring</h5>
+        <div class="sets-heading-items-grid">
+          <div class="player-set"><p>Player</p></div>
+          <% @round_numbers.each do |n| %>
+            <div class="player-set"><p>Set <%= n %></p></div>
+          <% end %>
+        </div>
+
+        <div class="sets-scoring-items-grid">
+          <!-- Player 1 row -->
+          <div class="player1-scoring-name">
+            <p><%= @match.player1&.first_name&.capitalize || "Player 1" %></p>
+          </div>
+          <% @round_numbers.each do |n| %>
+            <% r = @rounds_by_number[n] %>
+            <div class="player1-set <%= 'set-won' if r&.winner_id == @match.player1_id %>">
+              <p><%= r&.player1_score.nil? ? "0" : r.player1_score %></p>
+            </div>
+          <% end %>
+
+          <!-- Player 2 row -->
+          <div class="player2-scoring-name">
+            <p><%= @match.player2&.first_name&.capitalize || "Player 2" %></p>
+          </div>
+          <% @round_numbers.each do |n| %>
+            <% r = @rounds_by_number[n] %>
+            <div class="player2-set <%= 'set-won' if r&.winner_id == @match.player2_id %>">
+              <p><%= r&.player2_score.nil? ? "0" : r.player2_score %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   </div>

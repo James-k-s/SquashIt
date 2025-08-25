@@ -1,5 +1,6 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
+
 import "controllers"
 
 document.addEventListener("click", (e) => {
@@ -115,3 +116,17 @@ document.addEventListener("turbo:load", () => {
   const scroller = document.querySelector(".bracket-container");
   if (scroller) scroller.addEventListener("scroll", scheduleConnect, { passive: true });
 });
+
+function showSetWonPopup() {
+  const el = document.getElementById("set-won-data");
+  if (!el) return;
+  const msg = el.dataset.message;
+  if (msg) {
+    // Replace alert(...) with your modal trigger if you have one
+    alert(msg);
+  }
+  el.remove(); // prevent repeat on back/forward cache
+}
+
+document.addEventListener("turbo:load", showSetWonPopup);
+document.addEventListener("DOMContentLoaded", showSetWonPopup); // fallback

@@ -1,0 +1,61 @@
+<%# expects locals: match:, round:, round_numbers:, rounds_by_number: %>
+<% round_numbers    = local_assigns[:round_numbers]    || (1..(match.respond_to?(:max_sets) ? match.max_sets : 5)).to_a %>
+<% rounds_by_number = local_assigns[:rounds_by_number] || match.rounds.order(:round_number).index_by(&:round_number) %>
+
+<div class="match-score-container">
+  <div class="live-score-label">
+    <h4>Current set - Set <%= round&.round_number || 1 %></h4>
+    <p class="live-text-label">live</p>
+  </div>
+
+  <div class="match-current-score">
+    <div class="player1-score">
+      <h1 class="player-1-score-number"><%= round&.player1_score || 0 %></h1>
+      <div class="score-plus-minus">
+        <%= button_to "−",
+            update_score_match_path(match, r: (round&.round_number || 1), p1: -1),
+            method: :patch, class: "score-btn minus", data: { turbo_frame: "match_score" } %>
+        <%= button_to "+",
+            update_score_match_path(match, r: (round&.round_number || 1), p1: 1),
+            method: :patch, class: "score-btn plus", data: { turbo_frame: "match_score" } %>
+      </div>
+    </div>
+
+    <div class="player2-score">
+      <h1 class="player-2-score-number"><%= round&.player2_score || 0 %></h1>
+      <div class="score-plus-minus">
+        <%= button_to "−",
+            update_score_match_path(match, r: (round&.round_number || 1), p2: -1),
+            method: :patch, class: "score-btn minus", data: { turbo_frame: "match_score" } %>
+        <%= button_to "+",
+            update_score_match_path(match, r: (round&.round_number || 1), p2: 1),
+            method: :patch, class: "score-btn plus", data: { turbo_frame: "match_score" } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="sets-heading-items-grid">
+    <div class="player-set"><p>Player</p></div>
+    <% round_numbers.each do |n| %>
+      <div class="player-set"><p>Set <%= n %></p></div>
+    <% end %>
+  </div>
+
+  <div class="sets-scoring-items-grid">
+    <div class="player1-scoring-name"><p><%= match.player1&.first_name&.capitalize || "Player 1" %></p></div>
+    <% round_numbers.each do |n| %>
+      <% r = rounds_by_number[n] %>
+      <div class="player1-set <%= 'set-won' if r&.winner_id == match.player1_id %>">
+        <p><%= (r&.player1_score || 0) %></p>
+      </div>
+    <% end %>
+
+    <div class="player2-scoring-name"><p><%= match.player2&.first_name&.capitalize || "Player 2" %></p></div>
+    <% round_numbers.each do |n| %>
+      <% r = rounds_by_number[n] %>
+      <div class="player2-set <%= 'set-won' if r&.winner_id == match.player2_id %>">
+        <p><%= (r&.player2_score || 0) %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

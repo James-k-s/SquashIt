@@ -1,35 +1,29 @@
 Rails.application.routes.draw do
-  get 'announcements/create'
-
-  devise_for :users, controllers: {
-    registrations: "users/registrations"
-  }
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  devise_for :users, controllers: { registrations: "users/registrations" }
   get "up" => "rails/health#show", as: :rails_health_check
-
   root to: "pages#home"
 
   resources :tournaments, only: [:show, :new, :create, :index] do
     member do
-      patch :start    # => start_tournament_path(@tournament)
-      get :bracket    # => bracket_tournament_path(@tournament)
-      get "bracket/:match_id", to: "matches#show", as: :bracket_match
-
+      patch :start
+      get   :bracket
+      get   "bracket/:match_id", to: "matches#show", as: :bracket_match
     end
 
-    resources :announcements, only: [:create]
-
+    resources :announcements, only: [:create]   # <-- nested here
     resources :invites, only: [:create] do
       collection { post :share }
     end
   end
 
-  post "invites/:token/accept", to: "invites#accept", as: :accept_invite
-  post "invites/:token/decline", to: "invites#decline", as: :decline_invite
+  # Remove the non-nested announcements route and stray GET
+  # resources :announcements, only: [:create]
+  # get 'announcements/create'
 
-  # Defines the root path route ("/")
-  # root "posts#indeSx"
+  resources :matches, only: [:show] do
+    member { patch :update_score }
+  end
+
+  post "invites/:token/accept",  to: "invites#accept",  as: :accept_invite
+  post "invites/:token/decline", to: "invites#decline", as: :decline_invite
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_17_133741) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_25_120327) do
   create_table "announcements", force: :cascade do |t|
     t.integer "tournament_id", null: false
     t.integer "user_id", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_17_133741) do
     t.integer "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "completed"
     t.index ["match_id"], name: "index_rounds_on_match_id"
   end
 
